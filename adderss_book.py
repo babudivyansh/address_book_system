@@ -59,28 +59,31 @@ def main():
     """
     address_book_name = input("Enter the book name: ")
     addressbook_obj = AddressBook(address_book_name)
-    while True:
-        print("choice 1 to add contact")
-        choice = int(input("Enter your choice: "))
-        match choice:
-            case 1:
-                first_name = input("Enter First Name: ")
-                last_name = input("Enter Last Name: ")
-                address = input("Enter Address: ")
-                city = input("Enter City: ")
-                state = input("Enter State: ")
-                pin = int(input("Enter Pin: "))
-                phone = int(input("Enter Phone: "))
-                email = input("Enter Email: ")
-                contact_detalis_dict = {"first_name": first_name, "last_name": last_name, "address": address,
-                                        "city": city,
-                                        "state": state, "pin": pin, "phone": phone, "email": email}
-                contact_obj = Contact(contact_detalis_dict)
-                addressbook_obj.add_contact(contact_obj)
-            case 2:
-                addressbook_obj.contact_details()
-            case 3:
-                break
+    try:
+        while True:
+            print("choice 1 to add contact")
+            choice = int(input("Enter your choice: "))
+            match choice:
+                case 1:
+                    first_name = input("Enter First Name: ")
+                    last_name = input("Enter Last Name: ")
+                    address = input("Enter Address: ")
+                    city = input("Enter City: ")
+                    state = input("Enter State: ")
+                    pin = int(input("Enter Pin: "))
+                    phone = int(input("Enter Phone: "))
+                    email = input("Enter Email: ")
+                    contact_detalis_dict = {"first_name": first_name, "last_name": last_name, "address": address,
+                                            "city": city,
+                                            "state": state, "pin": pin, "phone": phone, "email": email}
+                    contact_obj = Contact(contact_detalis_dict)
+                    addressbook_obj.add_contact(contact_obj)
+                case 2:
+                    addressbook_obj.contact_details()
+                case 3:
+                    break
+    except Exception as e:
+        logger.exception(e)
 
 
 if __name__ == '__main__':
