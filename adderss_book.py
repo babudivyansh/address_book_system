@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-12 14:43
+@Date: 2023-12-12 22:47
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-12 14:43
+@Last Modified time: 2023-12-12 22:47
 
 @Title : Address Book System Problem.
 """
@@ -26,6 +26,52 @@ class Contact:
         self.pin = contact_detalis_dict.get("pin")
         self.phone = contact_detalis_dict.get("phone")
         self.email = contact_detalis_dict.get("email")
+
+    def update_contact(self):
+        """
+        Description: This function for updating contact.
+        Parameter: None.
+        Return:None
+        """
+        while True:
+            choice = int(input("""
+                        1. change first name
+                        2. change last name
+                        3. change address
+                        4. change city
+                        5. change state
+                        6. change phone number
+                        7. change email
+                        8. change Zip code
+                        9. exit
+            """))
+            match choice:
+                case 1:
+                    change_company = input("Enter new first name: ")
+                    self.first_name = change_company
+                case 2:
+                    change_company = input("Enter new last name: ")
+                    self.last_name = change_company
+                case 3:
+                    change_company = input("Enter new address: ")
+                    self.address = change_company
+                case 4:
+                    change_company = input("Enter new city: ")
+                    self.city = change_company
+                case 5:
+                    change_company = input("Enter new state: ")
+                    self.state = change_company
+                case 6:
+                    change_company = input("Enter new phone number: ")
+                    self.phone = change_company
+                case 7:
+                    change_company = input("Enter new email address: ")
+                    self.email = change_company
+                case 8:
+                    change_company = input("Enter new zip code: ")
+                    self.pin = change_company
+                case 9:
+                    break
 
 
 class AddressBook:
@@ -50,6 +96,16 @@ class AddressBook:
         for key, value in self.contact_dict.items():
             print(f"first name: {key} last name: {value.last_name} phone number: {value.phone} ")
 
+    def contact_update(self, name):
+        """
+        Description: This function for updating contact.
+        Parameter: string
+        Return:None
+        """
+        contact_obj: Contact = self.contact_dict.get(name)
+        if contact_obj:
+            contact_obj.update_contact()
+
 
 def main():
     """
@@ -61,8 +117,12 @@ def main():
     addressbook_obj = AddressBook(address_book_name)
     try:
         while True:
-            print("choice 1 to add contact")
-            choice = int(input("Enter your choice: "))
+            choice = int(input("""
+                        1. Add contact
+                        2. get all details of contact
+                        3. update conte info
+                        4. exit
+            """))
             match choice:
                 case 1:
                     first_name = input("Enter First Name: ")
@@ -74,13 +134,15 @@ def main():
                     phone = int(input("Enter Phone: "))
                     email = input("Enter Email: ")
                     contact_detalis_dict = {"first_name": first_name, "last_name": last_name, "address": address,
-                                            "city": city,
-                                            "state": state, "pin": pin, "phone": phone, "email": email}
+                                            "city": city, "state": state, "pin": pin, "phone": phone, "email": email}
                     contact_obj = Contact(contact_detalis_dict)
                     addressbook_obj.add_contact(contact_obj)
                 case 2:
                     addressbook_obj.contact_details()
                 case 3:
+                    name = input("Enter name: ")
+                    addressbook_obj.contact_update(name)
+                case 4:
                     break
     except Exception as e:
         logger.exception(e)
