@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-12 22:47
+@Date: 2023-12-12 23:02
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-12 22:47
+@Last Modified time: 2023-12-12 23:02
 
 @Title : Address Book System Problem.
 """
@@ -105,6 +105,19 @@ class AddressBook:
         contact_obj: Contact = self.contact_dict.get(name)
         if contact_obj:
             contact_obj.update_contact()
+        else:
+            print("contact not present!!")
+
+    def delete_contact(self, name):
+        """
+        Description: This function for delete a contact.
+        Parameter: string
+        Return:None
+        """
+        if name in self.contact_dict:
+            self.contact_dict.pop(name)
+        else:
+            print("contact not found!!")
 
 
 def main():
@@ -120,8 +133,8 @@ def main():
             choice = int(input("""
                         1. Add contact
                         2. get all details of contact
-                        3. update conte info
-                        4. exit
+                        3. update contact info
+                        4. delete contact
             """))
             match choice:
                 case 1:
@@ -143,7 +156,8 @@ def main():
                     name = input("Enter name: ")
                     addressbook_obj.contact_update(name)
                 case 4:
-                    break
+                    name = input("Enter name: ")
+                    addressbook_obj.delete_contact(name)
     except Exception as e:
         logger.exception(e)
 
