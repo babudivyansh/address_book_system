@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-12 14:27
+@Date: 2023-12-12 14:43
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-12 14:27
+@Last Modified time: 2023-12-12 14:43
 
 @Title : Address Book System Problem.
 """
@@ -28,23 +28,37 @@ class Contact:
         self.email = contact_detalis_dict.get("email")
 
 
-# class AddressBook:
-#     def __init__(self, address_book_name):
-#         self.address_book_name = address_book_name
-#         self.contact_dict = {}
-#
-#     def add_contact(self, contact_obj):
-#         self.contact_dict.update({contact_obj.first_name: contact_obj})
+class AddressBook:
+    def __init__(self, address_book_name):
+        self.address_book_name = address_book_name
+        self.contact_dict = {}
+
+    def add_contact(self, contact_obj):
+        """
+        Description: This function for adding a contact to contact dictionary.
+        Parameter: contact class object as parameter.
+        Return:None
+        """
+        self.contact_dict.update({contact_obj.first_name: contact_obj})
+
+    def contact_details(self):
+        """
+        Description: This function get all contact details from contact dictionary.
+        Parameter: None
+        Return:None
+        """
+        for key, value in self.contact_dict.items():
+            print(f"first name: {key} last name: {value.last_name} phone number: {value.phone} ")
 
 
 def main():
     """
-        Description: This function for calling all the methods in all classes.
-        Parameter: None
-        Return:None
+    Description: This function for calling all the methods in all classes.
+    Parameter: None
+    Return:None
     """
-    # address_book_name = input("Enter the book name: ")
-    # addressbook_obj = AddressBook(address_book_name)
+    address_book_name = input("Enter the book name: ")
+    addressbook_obj = AddressBook(address_book_name)
     while True:
         print("choice 1 to add contact")
         choice = int(input("Enter your choice: "))
@@ -62,8 +76,10 @@ def main():
                                         "city": city,
                                         "state": state, "pin": pin, "phone": phone, "email": email}
                 contact_obj = Contact(contact_detalis_dict)
-                # addressbook_obj.add_contact(contact_obj)
+                addressbook_obj.add_contact(contact_obj)
             case 2:
+                addressbook_obj.contact_details()
+            case 3:
                 break
 
 
