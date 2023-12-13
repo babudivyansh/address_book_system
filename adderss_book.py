@@ -1,17 +1,17 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-12 23:02
+@Date: 2023-12-13 11:33
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-12 23:02
+@Last Modified time: 2023-12-13 11:33
 
 @Title : Address Book System Problem.
 """
 import logging
 
-logging.basicConfig(filename='employee_log.log', level=logging.DEBUG, format='%(asctime)s %(message)s',
+logging.basicConfig(filename='address_book_log.log', level=logging.DEBUG, format='%(asctime)s %(message)s',
                     datefmt='%m:%d:%y''%I:%M:%S %p')
 logger = logging.getLogger(__name__)
 
@@ -135,6 +135,7 @@ def main():
                         2. get all details of contact
                         3. update contact info
                         4. delete contact
+                        5. exit
             """))
             match choice:
                 case 1:
@@ -158,6 +159,8 @@ def main():
                 case 4:
                     name = input("Enter name: ")
                     addressbook_obj.delete_contact(name)
+                case 5:
+                    break
     except Exception as e:
         logger.exception(e)
 
