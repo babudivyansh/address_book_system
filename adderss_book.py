@@ -47,29 +47,29 @@ class Contact:
             """))
             match choice:
                 case 1:
-                    change_company = input("Enter new first name: ")
-                    self.first_name = change_company
+                    change_contact = input("Enter new first name: ")
+                    self.first_name = change_contact
                 case 2:
-                    change_company = input("Enter new last name: ")
-                    self.last_name = change_company
+                    change_contact = input("Enter new last name: ")
+                    self.last_name = change_contact
                 case 3:
-                    change_company = input("Enter new address: ")
-                    self.address = change_company
+                    change_contact = input("Enter new address: ")
+                    self.address = change_contact
                 case 4:
-                    change_company = input("Enter new city: ")
-                    self.city = change_company
+                    change_contact = input("Enter new city: ")
+                    self.city = change_contact
                 case 5:
-                    change_company = input("Enter new state: ")
-                    self.state = change_company
+                    change_contact = input("Enter new state: ")
+                    self.state = change_contact
                 case 6:
-                    change_company = input("Enter new phone number: ")
-                    self.phone = change_company
+                    change_contact = input("Enter new phone number: ")
+                    self.phone = change_contact
                 case 7:
-                    change_company = input("Enter new email address: ")
-                    self.email = change_company
+                    change_contact = input("Enter new email address: ")
+                    self.email = change_contact
                 case 8:
-                    change_company = input("Enter new zip code: ")
-                    self.pin = change_company
+                    change_contact = input("Enter new zip code: ")
+                    self.pin = change_contact
                 case 9:
                     break
 
@@ -85,7 +85,11 @@ class AddressBook:
         Parameter: contact class object as parameter.
         Return:None
         """
-        self.contact_dict.update({contact_obj.first_name: contact_obj})
+        if contact_obj.first_name not in self.contact_dict:
+            self.contact_dict.update({contact_obj.first_name: contact_obj})
+
+        else:
+            raise Exception("Contact all. present")
 
     def contact_details(self):
         """
