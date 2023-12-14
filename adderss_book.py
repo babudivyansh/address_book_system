@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-14 11:00
+@Date: 2023-12-14 14:08
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-14 11:00
+@Last Modified time: 2023-12-14 14:08
 
 @Title : Address Book System Problem.
 """
@@ -95,6 +95,8 @@ class AddressBook:
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
         self.contact_dict = {}
+        self.person_by_city = {}
+        self.person_by_state = {}
 
     def add_contact(self, contact_obj):
         """
@@ -151,13 +153,28 @@ class AddressBook:
 
     def display_person_in_city_or_state(self, name):
         """
-        Description: This function  .
+        Description: This function is displaying aal the contact info using city and state .
         Parameter: string
-        Return:name of address book present in address book dictionary.
+        Return: None
         """
         for key, value in self.contact_dict.items():
             if value.city == name or value.state == name:
                 value.display_contact()
+            else:
+                print("city or state is not present!!")
+                continue
+
+    def view_person_by_city_or_state(self):
+        """
+        Description: This function is displaying contact name and storing in new dict of city and state. .
+        Parameter: None
+        Return: None
+        """
+        for key, value in self.contact_dict.items():
+            self.person_by_city.update({key: value.city})
+            self.person_by_state.update({key: value.state})
+        print(f"person: city {self.person_by_city}")
+        print(f"person: city {self.person_by_state}")
 
 
 class MultipleAddressBook:
@@ -198,7 +215,8 @@ def main():
                         3. update contact info
                         4. delete contact
                         5. display all contact by city or state
-                        6. exit
+                        6. view person by city or state
+                        7. exit
             """))
             match choice:
                 case 1:
@@ -236,9 +254,16 @@ def main():
                 case 5:
                     address_book_name = input("Enter the book name: ")
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
+                    if addressbook_obj is None:
+                        print("book is not present")
+                        continue
                     name = input("Enter city or state name: ")
                     addressbook_obj.display_person_in_city_or_state(name)
                 case 6:
+                    address_book_name = input("Enter the book name: ")
+                    addressbook_obj = multiple_book_obj.get_book(address_book_name)
+                    addressbook_obj.view_person_by_city_or_state()
+                case 7:
                     break
 
     except Exception as e:
