@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-14 14:08
+@Date: 2023-12-14 17:01
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-14 14:08
+@Last Modified time: 2023-12-14 17:01
 
 @Title : Address Book System Problem.
 """
@@ -151,30 +151,25 @@ class AddressBook:
         else:
             print("contact not found!!")
 
-    def display_person_in_city_or_state(self, name):
+    def display_person_in_city_or_state(self, city):
         """
         Description: This function is displaying aal the contact info using city and state .
         Parameter: string
         Return: None
         """
-        for key, value in self.contact_dict.items():
-            if value.city == name or value.state == name:
-                value.display_contact()
-            else:
-                print("city or state is not present!!")
-                continue
-
-    def view_person_by_city_or_state(self):
-        """
-        Description: This function is displaying contact name and storing in new dict of city and state. .
-        Parameter: None
-        Return: None
-        """
-        for key, value in self.contact_dict.items():
-            self.person_by_city.update({key: value.city})
-            self.person_by_state.update({key: value.state})
-        print(f"person: city {self.person_by_city}")
-        print(f"person: city {self.person_by_state}")
+        # count = 0
+        # for key, value in self.contact_dict.items():
+        #     if value.city == name or value.state == name:
+        #         value.display_contact()
+        #     else:
+        #         print("city or state is not present!!")
+        #         continue
+        #     count += 1
+        #     return count
+        contacts = dict(filter(lambda x: x[1].city.lower() == city.lower() or city.lower() == city.lower(),
+                               self.contact_dict.items()))
+        for i in contacts.values():
+            print(i.display_contact())
 
 
 class MultipleAddressBook:
@@ -215,8 +210,7 @@ def main():
                         3. update contact info
                         4. delete contact
                         5. display all contact by city or state
-                        6. view person by city or state
-                        7. exit
+                        6. exit
             """))
             match choice:
                 case 1:
@@ -259,11 +253,8 @@ def main():
                         continue
                     name = input("Enter city or state name: ")
                     addressbook_obj.display_person_in_city_or_state(name)
+                    # print(f"{count} of person In {name} present.")
                 case 6:
-                    address_book_name = input("Enter the book name: ")
-                    addressbook_obj = multiple_book_obj.get_book(address_book_name)
-                    addressbook_obj.view_person_by_city_or_state()
-                case 7:
                     break
 
     except Exception as e:
