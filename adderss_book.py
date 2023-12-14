@@ -1,18 +1,18 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-13 14:55
+@Date: 2023-12-14 11:00
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-13 14:55
+@Last Modified time: 2023-12-14 11:00
 
 @Title : Address Book System Problem.
 """
 import logging
 
 logging.basicConfig(filename='address_book_log.log', level=logging.DEBUG, format='%(asctime)s %(message)s',
-                    datefmt='%m:%d:%y''%I:%M:%S %p')
+                    datefmt='%m:%d:%y' '%I:%M:%S %p')
 logger = logging.getLogger(__name__)
 
 
@@ -26,6 +26,23 @@ class Contact:
         self.pin = contact_detalis_dict.get("pin")
         self.phone = contact_detalis_dict.get("phone")
         self.email = contact_detalis_dict.get("email")
+
+    def display_contact(self):
+        """
+        Description: This function for display all contact by city name or state name.
+        Parameter: None.
+        Return:None
+        """
+        print(f"""
+                first name: {self.first_name} 
+                last name: {self.last_name} 
+                phone number: {self.phone}
+                address : {self.address}
+                city : {self.city}
+                state : {self.state}
+                email : {self.email}
+                Zip code : {self.pin}
+        """)
 
     def update_contact(self):
         """
@@ -132,6 +149,16 @@ class AddressBook:
         else:
             print("contact not found!!")
 
+    def display_person_in_city_or_state(self, name):
+        """
+        Description: This function  .
+        Parameter: string
+        Return:name of address book present in address book dictionary.
+        """
+        for key, value in self.contact_dict.items():
+            if value.city == name or value.state == name:
+                value.display_contact()
+
 
 class MultipleAddressBook:
 
@@ -170,7 +197,8 @@ def main():
                         2. get all details of contact
                         3. update contact info
                         4. delete contact
-                        5. exit
+                        5. display all contact by city or state
+                        6. exit
             """))
             match choice:
                 case 1:
@@ -206,7 +234,13 @@ def main():
                     name = input("Enter name: ")
                     addressbook_obj.delete_contact(name)
                 case 5:
+                    address_book_name = input("Enter the book name: ")
+                    addressbook_obj = multiple_book_obj.get_book(address_book_name)
+                    name = input("Enter city or state name: ")
+                    addressbook_obj.display_person_in_city_or_state(name)
+                case 6:
                     break
+
     except Exception as e:
         logger.exception(e)
 
