@@ -43,6 +43,7 @@ class Contact:
                 email : {self.email}
                 Zip code : {self.pin}
         """)
+        print("---------------------------------------------------------")
 
     def update_contact(self):
         """
@@ -157,7 +158,7 @@ class AddressBook:
         Parameter: string
         Return: None
         """
-        # count = 0
+        count = 0
         # for key, value in self.contact_dict.items():
         #     if value.city == name or value.state == name:
         #         value.display_contact()
@@ -166,10 +167,12 @@ class AddressBook:
         #         continue
         #     count += 1
         #     return count
-        contacts = dict(filter(lambda x: x[1].city.lower() == city.lower() or city.lower() == city.lower(),
+        contacts = dict(filter(lambda x: x[1].city.lower() == city.lower() or x[1].state.lower() == city.lower(),
                                self.contact_dict.items()))
         for i in contacts.values():
-            print(i.display_contact())
+            count += 1
+            i.display_contact()
+        return count
 
 
 class MultipleAddressBook:
@@ -184,7 +187,6 @@ class MultipleAddressBook:
         Return:None
         """
         self.book_dict.update({addressbook_obj.address_book_name: addressbook_obj})
-        print(f"{addressbook_obj.address_book_name}")
 
     def get_book(self, name):
         """
@@ -248,12 +250,9 @@ def main():
                 case 5:
                     address_book_name = input("Enter the book name: ")
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
-                    if addressbook_obj is None:
-                        print("book is not present")
-                        continue
                     name = input("Enter city or state name: ")
-                    addressbook_obj.display_person_in_city_or_state(name)
-                    # print(f"{count} of person In {name} present.")
+                    count = addressbook_obj.display_person_in_city_or_state(name)
+                    print(f"{count} person in {name}")
                 case 6:
                     break
 
