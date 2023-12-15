@@ -10,10 +10,15 @@
 @Title : Address Book System Problem.
 """
 import logging
+import sys
 
 logging.basicConfig(filename='address_book_log.log', level=logging.DEBUG, format='%(asctime)s %(message)s',
                     datefmt='%m:%d:%y' '%I:%M:%S %p')
 logger = logging.getLogger(__name__)
+
+streamhdlr = logging.StreamHandler(sys.stderr)
+logger.addHandler(streamhdlr)
+streamhdlr.setLevel(logging.DEBUG)
 
 
 class Contact:
@@ -158,7 +163,6 @@ class AddressBook:
         Parameter: string
         Return: None
         """
-        count = 0
         # for key, value in self.contact_dict.items():
         #     if value.city == name or value.state == name:
         #         value.display_contact()
@@ -170,9 +174,8 @@ class AddressBook:
         contacts = dict(filter(lambda x: x[1].city.lower() == city.lower() or x[1].state.lower() == city.lower(),
                                self.contact_dict.items()))
         for i in contacts.values():
-            count += 1
             i.display_contact()
-        return count
+        return len(contacts)
 
 
 class MultipleAddressBook:
@@ -251,8 +254,7 @@ def main():
                     address_book_name = input("Enter the book name: ")
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
                     name = input("Enter city or state name: ")
-                    count = addressbook_obj.display_person_in_city_or_state(name)
-                    print(f"{count} person in {name}")
+                    print(addressbook_obj.display_person_in_city_or_state(name))
                 case 6:
                     break
 
