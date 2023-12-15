@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-14 17:01
+@Date: 2023-12-15 12:12
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-14 17:01
+@Last Modified time: 2023-12-15 12:12
 
 @Title : Address Book System Problem.
 """
@@ -175,7 +175,17 @@ class AddressBook:
                                self.contact_dict.items()))
         for i in contacts.values():
             i.display_contact()
+        # print(dict(sorted(self.contact_dict.items())))
         return len(contacts)
+
+    def sort_data(self):
+        """
+        Description: This function is sorting the contact using person name.
+        Parameter: None
+        Return: None
+        """
+        for key, value in dict(sorted(self.contact_dict.items())).items():
+            value.display_contact()
 
 
 class MultipleAddressBook:
@@ -215,7 +225,8 @@ def main():
                         3. update contact info
                         4. delete contact
                         5. display all contact by city or state
-                        6. exit
+                        6. sort the contact
+                        7. exit
             """))
             match choice:
                 case 1:
@@ -256,6 +267,10 @@ def main():
                     name = input("Enter city or state name: ")
                     print(addressbook_obj.display_person_in_city_or_state(name))
                 case 6:
+                    address_book_name = input("Enter the book name: ")
+                    addressbook_obj = multiple_book_obj.get_book(address_book_name)
+                    addressbook_obj.sort_data()
+                case 7:
                     break
 
     except Exception as e:
