@@ -96,6 +96,9 @@ class Contact:
                 case 9:
                     break
 
+    def __repr__(self):
+        return self.first_name
+
 
 class AddressBook:
     def __init__(self, address_book_name):
@@ -184,8 +187,22 @@ class AddressBook:
         Parameter: None
         Return: None
         """
-        for key, value in dict(sorted(self.contact_dict.items())).items():
+        for key, value in sorted(self.contact_dict.items()):
             value.display_contact()
+
+    def sort_contact_using_city_state_zip(self, name):
+        """
+        Description: This function is sorting the contact using city, state, zip.
+        Parameter: string
+        Return: None
+        """
+        # contacts = dict(filter(lambda x: x[1].city.lower() == name.lower() or x[1].state.lower() == name.lower() or x[1]
+        #                        .pin == int(name), self.contact_dict.items()))
+        # for i in contacts.values():
+        #     for key, value in dict(sorted(self.contact_dict.items())).items():
+        #         value.display_contact()
+        sorted_contact = sorted(self.contact_dict.values(), key=lambda x: x.city == name)
+        print(sorted_contact)
 
 
 class MultipleAddressBook:
@@ -226,7 +243,8 @@ def main():
                         4. delete contact
                         5. display all contact by city or state
                         6. sort the contact
-                        7. exit
+                        7. sort contact using city, state or zip
+                        8. exit
             """))
             match choice:
                 case 1:
@@ -271,6 +289,11 @@ def main():
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
                     addressbook_obj.sort_data()
                 case 7:
+                    address_book_name = input("Enter the book name: ")
+                    addressbook_obj = multiple_book_obj.get_book(address_book_name)
+                    name = input("Enter city or state or pin name: ")
+                    addressbook_obj.sort_contact_using_city_state_zip(name)
+                case 8:
                     break
 
     except Exception as e:
