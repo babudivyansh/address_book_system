@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-15 12:12
+@Date: 2023-12-18 15:18
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-15 12:12
+@Last Modified time: 2023-12-18 15:18
 
 @Title : Address Book System Problem.
 """
@@ -201,8 +201,10 @@ class AddressBook:
         # for i in contacts.values():
         #     for key, value in dict(sorted(self.contact_dict.items())).items():
         #         value.display_contact()
-        sorted_contact = sorted(self.contact_dict.values(), key=lambda x: x.city == name)
-        print(sorted_contact)
+        sorted_contact = sorted(self.contact_dict.values(), key=lambda x: x.city == name, reverse=True)
+        for i in sorted_contact:
+            i: Contact
+            print(i.first_name, '>>>>', i.city)
 
 
 class MultipleAddressBook:
