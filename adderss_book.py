@@ -1,11 +1,11 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-15 12:12
+@Date: 2023-12-18 15:13
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-15 12:12
+@Last Modified time: 2023-12-18 15:13
 
 @Title : Address Book System Problem.
 """
@@ -31,11 +31,12 @@ class Contact:
         self.pin = contact_detalis_dict.get("pin")
         self.phone = contact_detalis_dict.get("phone")
         self.email = contact_detalis_dict.get("email")
+        self.file = "file_text.txt"
 
     def display_contact(self):
         """
         Description: This function for display all contact by city name or state name.
-        Parameter: None.
+        Parameter: self object as parameter.
         Return:None
         """
         print(f"""
@@ -53,7 +54,7 @@ class Contact:
     def update_contact(self):
         """
         Description: This function for updating contact.
-        Parameter: None.
+        Parameter: self object as parameter.
         Return:None
         """
         while True:
@@ -96,6 +97,24 @@ class Contact:
                 case 9:
                     break
 
+    def add_contact_file(self):
+        """
+        Description: This function return all the contact info.
+        Parameter: self object as parameter.
+        Return:contact information.
+        """
+        return [f'{self.first_name} | {self.last_name} | {self.address} | {self.city} | {self.state} | {self.pin} | '
+                f'{self.phone} | {self.email}']
+
+    def add_address_book_file(self):
+        """
+        Description: This function write contact data in a text file.
+        Parameter: self object as parameter.
+        Return:None
+        """
+        with open(self.file, 'a') as f:
+            f.write(str(self.add_contact_file()))
+
     def __repr__(self):
         return self.first_name
 
@@ -104,13 +123,12 @@ class AddressBook:
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
         self.contact_dict = {}
-        self.person_by_city = {}
-        self.person_by_state = {}
 
     def add_contact(self, contact_obj):
         """
         Description: This function for adding a contact to contact dictionary.
-        Parameter: contact class object as parameter.
+        Parameter: self object as parameter.
+                   contact class object as parameter.
         Return:None
         """
         if contact_obj.first_name not in self.contact_dict:
@@ -122,7 +140,7 @@ class AddressBook:
     def contact_details(self):
         """
         Description: This function get all contact details from contact dictionary.
-        Parameter: None
+        Parameter: self object as parameter.
         Return:None
         """
         for key, value in self.contact_dict.items():
@@ -140,7 +158,7 @@ class AddressBook:
     def contact_update(self, name):
         """
         Description: This function for updating contact.
-        Parameter: string
+        Parameter: string and self object as parameter.
         Return:None
         """
         contact_obj: Contact = self.contact_dict.get(name)
@@ -152,7 +170,7 @@ class AddressBook:
     def delete_contact(self, name):
         """
         Description: This function for delete a contact.
-        Parameter: string
+        Parameter: string and self object as parameter.
         Return:None
         """
         if name in self.contact_dict:
@@ -163,7 +181,7 @@ class AddressBook:
     def display_person_in_city_or_state(self, city):
         """
         Description: This function is displaying aal the contact info using city and state .
-        Parameter: string
+        Parameter: string and self object as parameter.
         Return: None
         """
         # for key, value in self.contact_dict.items():
@@ -184,7 +202,7 @@ class AddressBook:
     def sort_data(self):
         """
         Description: This function is sorting the contact using person name.
-        Parameter: None
+        Parameter: self object as parameter.
         Return: None
         """
         for key, value in sorted(self.contact_dict.items()):
@@ -193,7 +211,7 @@ class AddressBook:
     def sort_contact_using_city_state_zip(self, name):
         """
         Description: This function is sorting the contact using city, state, zip.
-        Parameter: string
+        Parameter: string and self object as parameter.
         Return: None
         """
         # contacts = dict(filter(lambda x: x[1].city.lower() == name.lower() or x[1].state.lower() == name.lower() or x[1]
@@ -201,8 +219,10 @@ class AddressBook:
         # for i in contacts.values():
         #     for key, value in dict(sorted(self.contact_dict.items())).items():
         #         value.display_contact()
-        sorted_contact = sorted(self.contact_dict.values(), key=lambda x: x.city == name)
-        print(sorted_contact)
+        sorted_contact = sorted(self.contact_dict.values(), key=lambda x: x.city == name, reverse=True)
+        for i in sorted_contact:
+            i: Contact
+            print(i.first_name, '>>>>', i.city)
 
 
 class MultipleAddressBook:
@@ -213,7 +233,8 @@ class MultipleAddressBook:
     def add_multiple_book(self, addressbook_obj):
         """
         Description: This function add multiple book.
-        Parameter: address book object
+        Parameter: self object as parameter.
+                   address book object as parameter
         Return:None
         """
         self.book_dict.update({addressbook_obj.address_book_name: addressbook_obj})
@@ -221,7 +242,7 @@ class MultipleAddressBook:
     def get_book(self, name):
         """
         Description: This function for getting the name of address book from address book dictionary .
-        Parameter: string
+        Parameter: string and self object as parameter.
         Return:name of address book present in address book dictionary.
         """
         return self.book_dict.get(name)
@@ -244,7 +265,8 @@ def main():
                         5. display all contact by city or state
                         6. sort the contact
                         7. sort contact using city, state or zip
-                        8. exit
+                        8. add address book file
+                        9. exit
             """))
             match choice:
                 case 1:
@@ -265,6 +287,7 @@ def main():
                     contact_obj = Contact(contact_detalis_dict)
                     addressbook_obj.add_contact(contact_obj)
                     multiple_book_obj.add_multiple_book(addressbook_obj)
+                    contact_obj.add_address_book_file()
                 case 2:
                     address_book_name = input("Enter the book name: ")
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
@@ -294,6 +317,8 @@ def main():
                     name = input("Enter city or state or pin name: ")
                     addressbook_obj.sort_contact_using_city_state_zip(name)
                 case 8:
+                    pass
+                case 9:
                     break
 
     except Exception as e:
