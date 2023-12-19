@@ -1,14 +1,15 @@
 """
 @Author: Divyansh Babu
 
-@Date: 2023-12-18 15:13
+@Date: 2023-12-19 11:29
 
 @Last Modified by: Divyansh Babu
 
-@Last Modified time: 2023-12-18 15:13
+@Last Modified time: 2023-12-19 11:29
 
 @Title : Address Book System Problem.
 """
+import csv
 import logging
 import sys
 
@@ -106,14 +107,19 @@ class Contact:
         return [f'{self.first_name} | {self.last_name} | {self.address} | {self.city} | {self.state} | {self.pin} | '
                 f'{self.phone} | {self.email}']
 
+    def add_contact_csv(self):
+        return {"first_name": self.first_name, "last_name": self.last_name,
+                "address": self.address, "city": self.city, "state": self.state,
+                "pin": self.pin, "phone": self.phone, "email": self.email}
+
     def add_address_book_file(self):
         """
         Description: This function write contact data in a text file.
         Parameter: self object as parameter.
         Return:None
         """
-        with open(self.file, 'a') as f:
-            f.write(str(self.add_contact_file()))
+        with open(self.file, 'a', newline="") as f:
+            f.write(str(f"{self.add_contact_file()}\n"))
 
     def __repr__(self):
         return self.first_name
@@ -122,7 +128,9 @@ class Contact:
 class AddressBook:
     def __init__(self, address_book_name):
         self.address_book_name = address_book_name
+        self.csv_file = 'csv_file.csv'
         self.contact_dict = {}
+        self.csv_contact_dict = {}
 
     def add_contact(self, contact_obj):
         """
@@ -184,19 +192,10 @@ class AddressBook:
         Parameter: string and self object as parameter.
         Return: None
         """
-        # for key, value in self.contact_dict.items():
-        #     if value.city == name or value.state == name:
-        #         value.display_contact()
-        #     else:
-        #         print("city or state is not present!!")
-        #         continue
-        #     count += 1
-        #     return count
         contacts = dict(filter(lambda x: x[1].city.lower() == city.lower() or x[1].state.lower() == city.lower(),
                                self.contact_dict.items()))
         for i in contacts.values():
             i.display_contact()
-        # print(dict(sorted(self.contact_dict.items())))
         return len(contacts)
 
     def sort_data(self):
@@ -214,15 +213,26 @@ class AddressBook:
         Parameter: string and self object as parameter.
         Return: None
         """
-        # contacts = dict(filter(lambda x: x[1].city.lower() == name.lower() or x[1].state.lower() == name.lower() or x[1]
-        #                        .pin == int(name), self.contact_dict.items()))
-        # for i in contacts.values():
-        #     for key, value in dict(sorted(self.contact_dict.items())).items():
-        #         value.display_contact()
         sorted_contact = sorted(self.contact_dict.values(), key=lambda x: x.city == name, reverse=True)
         for i in sorted_contact:
             i: Contact
             print(i.first_name, '>>>>', i.city)
+
+    def read_write_csv(self):
+        """
+        Description: This function is read and write data in csv file.
+        Parameter: self object as parameter.
+        Return: None
+        """
+        with open(self.csv_file, 'w', newline="") as file:
+            field_names = ['address_book_name', 'first_name', 'last_name', 'address', 'city', 'state', 'pin', 'phone',
+                           'email']
+            writer = csv.DictWriter(file, fieldnames=field_names)
+            writer.writeheader()
+            for key, value in self.contact_dict.items():
+                data = value.add_contact_csv()
+                data.update({'address_book_name': key})
+                writer.writerow(data)
 
 
 class MultipleAddressBook:
@@ -317,7 +327,9 @@ def main():
                     name = input("Enter city or state or pin name: ")
                     addressbook_obj.sort_contact_using_city_state_zip(name)
                 case 8:
-                    pass
+                    address_book_name = input("Enter the book name: ")
+                    addressbook_obj = multiple_book_obj.get_book(address_book_name)
+                    addressbook_obj.read_write_csv()
                 case 9:
                     break
 
