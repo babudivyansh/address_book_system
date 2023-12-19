@@ -1,0 +1,24 @@
+{
+    "contact details": {
+        "divyansh": {
+            "first_name": "divyansh",
+            "last_name": "babu",
+            "address": "G-33",
+            "city": "noida",
+            "state": "up",
+            "pin": 201301,
+            "phone": 9005202790,
+            "email": "abc@gmail.com"
+        },
+        "ravi": {
+            "first_name": "ravi",
+            "last_name": "singh",
+            "address": "B-204",
+            "city": "noida",
+            "state": "up",
+            "pin": 201203,
+            "phone": 5588996644,
+            "email": "xyz@gmail.com"
+        }
+    }
+}
