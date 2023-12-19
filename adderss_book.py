@@ -283,9 +283,9 @@ class MultipleAddressBook:
         """
         return self.book_dict.get(name)
 
-    def read_write_json(self):
+    def write_json(self):
         """
-        Description: This function for reading and writing data in json file.
+        Description: This function for writing data in json file.
         Parameter: self object as parameter.
         Return: None
         """
@@ -295,6 +295,19 @@ class MultipleAddressBook:
         with open(self.json_file, 'w') as file:
             json.dump(json_dict, file, indent=4)
             file.close()
+
+    @staticmethod
+    def read_json():
+        """
+        Description: This function for reading data from json file.
+        Parameter: self object as parameter.
+        Return: None
+        """
+        json_file = open("json_file.json")
+        data = json.load(json_file)
+        for i in data.items():
+            print(i)
+        json_file.close()
 
 
 def main():
@@ -372,7 +385,7 @@ def main():
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
                     addressbook_obj.read_write_csv()
                 case 9:
-                    multiple_book_obj.read_write_json()
+                    multiple_book_obj.write_json()
                 case 10:
                     break
 
