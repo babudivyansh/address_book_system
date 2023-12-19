@@ -118,15 +118,6 @@ class Contact:
                 "address": self.address, "city": self.city, "state": self.state,
                 "pin": self.pin, "phone": self.phone, "email": self.email}
 
-    def add_contact_json(self):
-        """
-        Description: This function return contact info dict.
-        Parameter: self object as parameter.
-        Return: contact info dict.
-        """
-        return {"first_name": self.first_name, "last_name": self.last_name, "address": self.address,
-                "city": self.city, "state": self.state, "pin": self.pin, "phone": self.phone, "email": self.email}
-
     def add_address_book_file(self):
         """
         Description: This function write contact data in a text file.
@@ -257,7 +248,7 @@ class AddressBook:
         Return: None
         """
         for key, value in self.contact_dict.items():
-            self.json_contact_dict.update({key: value.add_contact_json()})
+            self.json_contact_dict.update({key: value.add_contact_csv()})
 
 
 class MultipleAddressBook:
@@ -386,6 +377,7 @@ def main():
                     addressbook_obj.read_write_csv()
                 case 9:
                     multiple_book_obj.write_json()
+                    multiple_book_obj.read_json()
                 case 10:
                     break
 
