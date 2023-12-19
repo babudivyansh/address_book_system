@@ -218,9 +218,9 @@ class AddressBook:
             i: Contact
             print(i.first_name, '>>>>', i.city)
 
-    def read_write_csv(self):
+    def write_csv(self):
         """
-        Description: This function is read and write data in csv file.
+        Description: This function is write data in csv file.
         Parameter: self object as parameter.
         Return: None
         """
@@ -233,6 +233,18 @@ class AddressBook:
                 data = value.add_contact_csv()
                 data.update({'address_book_name': key})
                 writer.writerow(data)
+
+    def read_csv(self):
+        """
+        Description: This function is read data from csv file.
+        Parameter: self object as parameter.
+        Return: None
+        """
+        with open(self.csv_file, mode='r') as file:
+            csv_file = csv.reader(file)
+            for i in csv_file:
+                print(i)
+            file.close()
 
 
 class MultipleAddressBook:
@@ -329,7 +341,8 @@ def main():
                 case 8:
                     address_book_name = input("Enter the book name: ")
                     addressbook_obj = multiple_book_obj.get_book(address_book_name)
-                    addressbook_obj.read_write_csv()
+                    addressbook_obj.write_csv()
+                    addressbook_obj.read_csv()
                 case 9:
                     break
 
